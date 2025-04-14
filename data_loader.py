@@ -17,7 +17,7 @@ class DataLoader:
         """
         Constructor
         """
-        self.data_path:str = config.get_parameter('ENPM611_PROJECT_DATA_PATH')
+        self.data_path:str = './github_issues.json'
         
     def get_issues(self):
         """

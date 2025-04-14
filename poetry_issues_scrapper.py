@@ -1,20 +1,39 @@
 import requests
 import json
+import time
+
 
 # GitHub repository issues API endpoint
 repo_url = "https://api.github.com/repos/python-poetry/poetry/issues"
 
-access_token = "Access_Token"
+access_token = "nope"
 headers = {
     "Authorization": f"token {access_token}"
 }
 
 big_issues = []
-# Fetch issues
-response = requests.get(repo_url, headers=headers)
+
+def fetch_all_issues(repo_url, headers):
+    issues = []
+    page = 1
+    while True:
+        # Add pagination parameters
+        response = requests.get(repo_url, headers=headers, params={"per_page": 50, "page": page})
+        time.sleep(1)
+        print(f"Fetching page {page}...")
+        if response.status_code != 200:
+            print(f"Failed to fetch issues. Status code: {response.status_code}")
+            break
+        page_issues = response.json()
+        if not page_issues:  # Stop if no more issues are returned
+            break
+        issues.extend(page_issues)
+        page += 1
+    print(f"Fetched {len(issues)} issues.")
+    return issues
 
 def fetch_issue_timeline(url): 
-    response = requests.get(url)
+    response = requests.get(url) 
     res = []
     if response.status_code == 200:
         for val in response.json():
@@ -29,29 +48,25 @@ def fetch_issue_timeline(url):
         print(f"Failed to fetch issue timeline. Status code: {response.status_code}")
         return []
 
+# Fetch all issues
+issues = fetch_all_issues(repo_url, headers)
 
-# Check if the request was successful
-if response.status_code == 200:
-    issues = response.json()
-    for issue in issues: 
-        big_issues.append({
-            "url": issue["url"],
-            "creator": issue["user"]["login"],
-            "labels": [label["name"] for label in issue["labels"]],
-            "state": issue["state"],
-            "assigness": [assignee["login"] for assignee in issue["assignees"]],
-            "title": issue["title"],
-            "text": issue.get("body", "").replace("\r\n", " ").replace("\r", " "),
-            "number": issue["number"],
-            "created_date": issue["created_at"],
-            "updated_date": issue["updated_at"],
-            "timeline_url": f"https://api.github.com/repos/python-poetry/poetry/issues/{issue['number']}/timeline",
-            "events": fetch_issue_timeline(f"https://api.github.com/repos/python-poetry/poetry/issues/{issue['number']}/timeline")
-        })
+for issue in issues: 
+    big_issues.append({
+        "url": issue["url"],
+        "creator": issue["user"]["login"],
+        "labels": [label["name"] for label in issue["labels"]],
+        "state": issue["state"],
+        "assigness": [assignee["login"] for assignee in issue["assignees"]],
+        "title": issue["title"],
+        "text": issue.get("body", "").replace("\r\n", " ").replace("\r", " "),
+        "number": issue["number"],
+        "created_date": issue["created_at"],
+        "updated_date": issue["updated_at"],
+        "timeline_url": f"https://api.github.com/repos/python-poetry/poetry/issues/{issue['number']}/timeline",
+        "events": fetch_issue_timeline(f"https://api.github.com/repos/python-poetry/poetry/issues/{issue['number']}/timeline")
+    })
 
-else:
-    print(f"Failed to fetch issues. Status code: {response.status_code}")
-    
-    # Save the extracted issues to a JSON file
+# Save the extracted issues to a JSON file
 with open('github_issues.json', 'w') as json_file:
     json.dump(big_issues, json_file, indent=4)
