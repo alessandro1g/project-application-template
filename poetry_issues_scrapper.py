@@ -18,7 +18,7 @@ def fetch_all_issues(repo_url, headers):
     page = 1
     while True:
         # Add pagination parameters
-        response = requests.get(repo_url, headers=headers, params={"per_page": 50, "page": page})
+        response = requests.get(repo_url, headers=headers, params={"per_page": 100, "page": page})
         time.sleep(1)
         print(f"Fetching page {page}...")
         if response.status_code != 200:
@@ -33,7 +33,19 @@ def fetch_all_issues(repo_url, headers):
     return issues
 
 def fetch_issue_timeline(url): 
-    response = requests.get(url) 
+    page = 1
+    while True:
+        response = requests.get(repo_url, headers=headers, params={"per_page": 50, "page": 1})
+        time.sleep(1)
+        print(f"Fetching page {page}...")
+        if response.status_code != 200:
+            print(f"Failed to fetch issues. Status code: {response.status_code}")
+            break
+        page_issues = response.json()
+        if not page_issues:  # Stop if no more issues are returned
+            break
+        issues.extend(page_issues)
+        page += 1
     res = []
     if response.status_code == 200:
         for val in response.json():
@@ -52,6 +64,7 @@ def fetch_issue_timeline(url):
 issues = fetch_all_issues(repo_url, headers)
 
 for issue in issues: 
+
     big_issues.append({
         "url": issue["url"],
         "creator": issue["user"]["login"],
@@ -63,8 +76,9 @@ for issue in issues:
         "number": issue["number"],
         "created_date": issue["created_at"],
         "updated_date": issue["updated_at"],
-        "timeline_url": f"https://api.github.com/repos/python-poetry/poetry/issues/{issue['number']}/timeline",
-        "events": fetch_issue_timeline(f"https://api.github.com/repos/python-poetry/poetry/issues/{issue['number']}/timeline")
+        "timeline_url": issue['timeline_url'],
+        "events": fetch_issue_timeline(issue['timeline_url']),
+        "response_count": issue.get("comments", 0)  # Add the number of comments
     })
 
 # Save the extracted issues to a JSON file
