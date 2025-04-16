@@ -11,6 +11,7 @@ import config
 from example_analysis import ExampleAnalysis
 from analysis1 import Analysis1
 from analysis1_contributor_vs_labelheatmap import ContributorVsLabelHeatmap
+from analysis2_monthly_issue_trend import MonthlyIssueTrend
 
 
 def parse_args():
@@ -54,6 +55,6 @@ elif args.feature == 1:
 elif args.feature == 2:
     ContributorVsLabelHeatmap().run()
 elif args.feature == 3:
-    pass # TODO call third analysis
+    MonthlyIssueTrend().run()
 else:
     print('Need to specify which feature to run with --feature flag.')
