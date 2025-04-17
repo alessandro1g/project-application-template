@@ -18,37 +18,43 @@ class Analysis2:
         issues: List[Issue] = DataLoader().get_issues()
         
         # Prepare data for plotting
-        issue_event_data = []
         issue_dict = {}
         for issue in issues:
-            issue_dict[issue.title] = {}
             for event in issue.events:
                 event_time = event.event_date  
                 # Convert the event time to a datetime object
                 if event_time is not None: 
-                    if event_time.month not in issue_dict[issue.title]:
-                        issue_dict[issue.title][event_time.month] = 1
-                    else: 
-                        issue_dict[issue.title][event_time.month] += 1
+                    if str(event_time.month) + "-" + str(event_time.year) not in issue_dict:
+                        issue_dict[str(event_time.month) + "-" + str(event_time.year)] = {}
 
+                    if event.event_type not in issue_dict[str(event_time.month) + "-" + str(event_time.year)]:
+                        issue_dict[str(event_time.month) + "-" + str(event_time.year)][event.event_type] = 1
+                    else:
+                        issue_dict[str(event_time.month) + "-" + str(event_time.year)][event.event_type] += 1
 
-        plt.figure(figsize=(10, 6))  # Move this outside the loop to create a single plot
+        # Plot the data
+        self.plot_data(issue_dict)
 
-        for issue_title, months in issue_dict.items():
-            # Sort the months dictionary by month (key)
-            sorted_months = sorted(months.items())  # Returns a list of tuples [(month, count), ...]
-            x = [month for month, _ in sorted_months]  # Extract months (x-axis)
-            y = [count for _, count in sorted_months]  # Extract counts (y-axis)
-
-            # Plot each issue's data as a separate line
-            plt.plot(x, y, label=issue_title)
-
-        # Adding labels, title, and legend
+    def plot_data(self, issue_dict):
+        # Aggregate data for plotting
+        months = sorted(issue_dict.keys())
+        event_types = set(
+            event_type for month in issue_dict.values() for event_type in month.keys()
+        )
+        
+        for event_type in event_types:
+            counts = [
+                issue_dict[month].get(event_type, 0) for month in months
+            ]
+            plt.plot(months, counts, label=event_type)
+        
+        # Customize the plot
+        plt.title("Event Counts by Month")
         plt.xlabel("Month")
-        plt.ylabel("Event Count")
-        plt.title("Event Counts by Month for Each Issue")
-        plt.legend()
+        plt.ylabel("Count")
+        plt.legend(loc='best', bbox_to_anchor=(1.05, 1))  # Move legend to the side
         plt.grid(True)
+        plt.tight_layout()  # Adjust layout to fit the legend
         plt.show()
 
 if __name__ == '__main__':
