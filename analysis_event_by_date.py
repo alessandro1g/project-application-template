@@ -8,7 +8,7 @@ from data_loader import DataLoader
 from model import Issue,Event
 import config
 
-class Analysis_event_by_date:
+class Analysis_Event_By_Date:
     def __init__(self):
         # Parameter is passed in via command line (--user)
         self.USER:str = config.get_parameter('user')
@@ -50,4 +50,4 @@ class Analysis_event_by_date:
 
 if __name__ == '__main__':
     # Invoke run method when running this module directly
-    Analysis_event_by_date().run()
+    Analysis_Event_By_Date().run()

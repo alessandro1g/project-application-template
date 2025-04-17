@@ -10,11 +10,11 @@ import argparse
 import config
 from example_analysis import ExampleAnalysis
 
-from analysis1 import Analysis1
+from analysis_event_by_date import Analysis_Event_By_Date
 from analysis_contributor_vs_labelheatmap import ContributorVsLabelHeatmap
 from analysis_monthly_issue_trend import MonthlyIssueTrend
 from analysis_label_popularity import LabelPopularityOverTime
-
+from analysis_type_of_events import Analysis_Type_Of_Events
 
 
 def parse_args():
@@ -54,12 +54,14 @@ config.overwrite_from_args(args)
 if args.feature == 0:
     ExampleAnalysis().run()
 elif args.feature == 1:
-    Analysis1().run()
+    Analysis_Event_By_Date().run()
 elif args.feature == 2:
     ContributorVsLabelHeatmap().run()
 elif args.feature == 3:
     MonthlyIssueTrend().run()
 elif args.feature == 4:
     LabelPopularityOverTime().run()
+elif args.feature == 5:
+    Analysis_Type_Of_Events().run()
 else:
     print('Need to specify which feature to run with --feature flag.')
