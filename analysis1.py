@@ -9,57 +9,46 @@ from model import Issue,Event
 import config
 
 class Analysis1:
-    """
-    Implements an example analysis of GitHub
-    issues and outputs the result of that analysis.
-    """
-    
     def __init__(self):
-        """
-        Constructor
-        """
         # Parameter is passed in via command line (--user)
         self.USER:str = config.get_parameter('user')
     
     def run(self):
-        """
-        Starting point for this analysis.
-        
-        Note: this is just an example analysis. You should replace the code here
-        with your own implementation and then implement two more such analyses.
-        """
         issues:List[Issue] = DataLoader().get_issues()
         print(issues)
         
         ### BASIC STATISTICS
         # Calculate the total number of events for a specific user (if specified in command line args)
-        total_events:int = 0
+        date_event_map: dict = {}
         for issue in issues:
-            total_events += len([e for e in issue.events if self.USER is None or e.author == self.USER])
-        
-        output:str = f'Found {total_events} events across {len(issues)} issues'
-        if self.USER is not None:
-            output += f' for {self.USER}.'
-        else:
-            output += '.'
-        print('\n\n'+output+'\n\n')
-        
+            # Access the correct attribute of the Event object
+            for event in issue.events:
+                event_date = event.event_date  # Replace 'date' with the actual attribute name for the event's date
+                
+                # Increment the count for the event's date
+                if event_date in date_event_map:
+                    date_event_map[event_date] += 1
+                else:
+                    date_event_map[event_date] = 1
 
-        ### BAR CHART
-        # Display a graph of the top 50 creators of issues
-        top_n:int = 50
-        # Create a dataframe (with only the creator's name) to make statistics a lot easier
-        df = pd.DataFrame.from_records([{'creator':issue.creator} for issue in issues])
-        # Determine the number of issues for each creator and generate a bar chart of the top N
-        df_hist = df.groupby(df["creator"]).value_counts().nlargest(top_n).plot(kind="bar", figsize=(14,8), title=f"Top {top_n} issue creators")
-        # Set axes labels
-        df_hist.set_xlabel("Creator Names")
-        df_hist.set_ylabel("# of issues created")
-        # Plot the chart
-        plt.show() 
-                        
-    
+        # Plot the date_event_map
+        self.plot_date_event_map(date_event_map)
+
+    def plot_date_event_map(self, date_event_map: dict):
+        # Create a plot for date_event_map
+        dates = list(date_event_map.keys())
+        event_counts = list(date_event_map.values())
+
+        plt.figure(figsize=(10, 6))
+        plt.bar(dates, event_counts, color='skyblue')
+        plt.xlabel('Date')
+        plt.ylabel('Event Count')
+        plt.title('Event Count by Date')
+        plt.xticks(rotation=45)
+        plt.tight_layout()
+        plt.show()
+
 
 if __name__ == '__main__':
     # Invoke run method when running this module directly
-    analysis1().run()
+    Analysis1().run()
