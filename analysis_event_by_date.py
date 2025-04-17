@@ -24,7 +24,6 @@ class Analysis1:
             # Access the correct attribute of the Event object
             for event in issue.events:
                 event_date = event.event_date  # Replace 'date' with the actual attribute name for the event's date
-                
                 # Increment the count for the event's date
                 if event_date in date_event_map:
                     date_event_map[event_date] += 1

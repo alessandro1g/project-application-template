@@ -9,7 +9,7 @@ import argparse
 
 import config
 from example_analysis import ExampleAnalysis
-from analysis1 import Analysis1
+from analysis_event_by_date import Analysis1
 
 
 def parse_args():
