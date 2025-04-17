@@ -10,6 +10,9 @@ import argparse
 import config
 from example_analysis import ExampleAnalysis
 from analysis1 import Analysis1
+from analysis_contributor_vs_labelheatmap import ContributorVsLabelHeatmap
+from analysis_monthly_issue_trend import MonthlyIssueTrend
+from analysis_label_popularity import LabelPopularityOverTime
 
 
 def parse_args():
@@ -51,8 +54,10 @@ if args.feature == 0:
 elif args.feature == 1:
     Analysis1().run()
 elif args.feature == 2:
-    pass # TODO call second analysis
+    ContributorVsLabelHeatmap().run()
 elif args.feature == 3:
-    pass # TODO call third analysis
+    MonthlyIssueTrend().run()
+elif args.feature == 4:
+    LabelPopularityOverTime().run()
 else:
     print('Need to specify which feature to run with --feature flag.')
