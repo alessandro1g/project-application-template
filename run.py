@@ -12,6 +12,7 @@ from example_analysis import ExampleAnalysis
 from analysis1 import Analysis1
 from analysis1_contributor_vs_labelheatmap import ContributorVsLabelHeatmap
 from analysis2_monthly_issue_trend import MonthlyIssueTrend
+from analysis3_label_popularity import LabelPopularityOverTime
 
 
 def parse_args():
@@ -56,5 +57,7 @@ elif args.feature == 2:
     ContributorVsLabelHeatmap().run()
 elif args.feature == 3:
     MonthlyIssueTrend().run()
+elif args.feature == 4:
+    LabelPopularityOverTime().run()
 else:
     print('Need to specify which feature to run with --feature flag.')
