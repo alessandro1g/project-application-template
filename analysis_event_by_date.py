@@ -8,7 +8,7 @@ from data_loader import DataLoader
 from model import Issue,Event
 import config
 
-class Analysis1:
+class Analysis_event_by_date:
     def __init__(self):
         # Parameter is passed in via command line (--user)
         self.USER:str = config.get_parameter('user')
@@ -24,7 +24,6 @@ class Analysis1:
             # Access the correct attribute of the Event object
             for event in issue.events:
                 event_date = event.event_date  # Replace 'date' with the actual attribute name for the event's date
-                
                 # Increment the count for the event's date
                 if event_date in date_event_map:
                     date_event_map[event_date] += 1
@@ -51,4 +50,4 @@ class Analysis1:
 
 if __name__ == '__main__':
     # Invoke run method when running this module directly
-    Analysis1().run()
+    Analysis_event_by_date().run()
