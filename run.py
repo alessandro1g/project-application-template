@@ -10,9 +10,9 @@ import argparse
 import config
 from example_analysis import ExampleAnalysis
 from analysis1 import Analysis1
-from analysis1_contributor_vs_labelheatmap import ContributorVsLabelHeatmap
-from analysis2_monthly_issue_trend import MonthlyIssueTrend
-from analysis3_label_popularity import LabelPopularityOverTime
+from analysis_contributor_vs_labelheatmap import ContributorVsLabelHeatmap
+from analysis_monthly_issue_trend import MonthlyIssueTrend
+from analysis_label_popularity import LabelPopularityOverTime
 
 
 def parse_args():
