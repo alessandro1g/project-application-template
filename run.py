@@ -15,6 +15,12 @@ from analysis_contributor_vs_labelheatmap import ContributorVsLabelHeatmap
 from analysis_monthly_issue_trend import MonthlyIssueTrend
 from analysis_label_popularity import LabelPopularityOverTime
 from analysis_type_of_events import Analysis_Type_Of_Events
+from analysis_event_count_by_label import Analyze_Event_Count_By_Label
+from analysis_issue_count_by_label import AnalyzeIssueCountByLabel
+from analysis_issue_creation_over_years import AnalyzeIssueCreationOverYears
+from analysis_issue_per_event import AnalyzeIssuePerEvent
+from analysis_open_issue_by_creator import AnalyzeOpenIssuesByCreator
+from analysis_open_issue_duration import AnalyzeOpenIssueDurationMonths
 
 
 def parse_args():
@@ -63,5 +69,17 @@ elif args.feature == 4:
     LabelPopularityOverTime().run()
 elif args.feature == 5:
     Analysis_Type_Of_Events().run()
+elif args.feature == 6:
+    Analyze_Event_Count_By_Label().run()
+elif args.feature == 7:
+    AnalyzeIssueCountByLabel().run()
+elif args.feature == 8:
+    AnalyzeIssueCreationOverYears().run()
+elif args.feature == 9:
+    AnalyzeIssuePerEvent().run()
+elif args.feature == 10:
+    AnalyzeOpenIssuesByCreator().run()
+elif args.feature == 11:
+    AnalyzeOpenIssueDurationMonths().run()
 else:
     print('Need to specify which feature to run with --feature flag.')
