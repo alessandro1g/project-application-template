@@ -12,6 +12,16 @@ class Analysis_Event_By_Date:
     def __init__(self):
         # Parameter is passed in via command line (--user)
         self.USER:str = config.get_parameter('user')
+
+    def generate_date_event_map(self, issues):
+        date_event_map = {}
+        for issue in issues:
+            for event in issue.events:
+                if event.event_date in date_event_map:
+                    date_event_map[event.event_date] += 1
+                else:
+                    date_event_map[event.event_date] = 1
+        return date_event_map
     
     def run(self):
         issues:List[Issue] = DataLoader().get_issues()
