@@ -86,6 +86,7 @@ To run all test cases and generate a coverage report:
 ```bash
 coverage run -m unittest discover
 coverage report --omit="test_*"
+```
 
 ## Test Coverage
 
@@ -103,7 +104,7 @@ coverage report --omit="test_*"
 
 ---
 
-## Issues Found During Testing
+##  Issues Found During Testing
 
 ### 1. Plotting Error in `analysis_type_of_events.py`
 
