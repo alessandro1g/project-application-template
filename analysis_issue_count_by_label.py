@@ -10,12 +10,12 @@ class AnalyzeIssueCountByLabel:
         self.issues = DataLoader().get_issues()
 
     def run(self):
-        issues = self.load_issues_from_url(self.json_url)
+        issues = self.issues
         if issues is None:
             return
-
         label_counts = self.count_issue_labels(issues)
         self.plot_label_counts(label_counts)
+
 
     # Count Issue Labels and increment its count if its already present in the dictionary
     def count_issue_labels(self, issues: List[Dict]) -> Dict[str, int]:

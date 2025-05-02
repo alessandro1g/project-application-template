@@ -10,7 +10,7 @@ class AnalyzeOpenIssueDurationMonths:
         self.issues = DataLoader().get_issues()
 
     def run(self):
-        issues = self.fetch_issues()
+        issues = self.issues
         if not issues:
             return
 
