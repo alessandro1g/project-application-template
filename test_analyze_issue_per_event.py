@@ -5,14 +5,14 @@ from analysis_issue_per_event import AnalyzeIssuePerEvent
 
 class TestAnalyzeIssuePerEvent(unittest.TestCase):
 
-    @patch('analysis4.DataLoader')
+    @patch('analysis_issue_per_event.DataLoader')
     def test_extract_event_counts(self, MockDataLoader):
         MockDataLoader.return_value.get_issues.return_value = [
             {"events": [1, 2, 3]},
             {"events": []},
             {"events": [1]},
             {"events": None},
-            {"events": "not-a-list"}
+            {"events": "invalid-list"}
         ]
 
         analyzer = AnalyzeIssuePerEvent()
@@ -35,8 +35,8 @@ class TestAnalyzeIssuePerEvent(unittest.TestCase):
         }
         self.assertEqual(result, expected)
 
-    @patch('analysis4.AnalyzeIssuePerEvent.plot_event_distribution')
-    @patch('analysis4.DataLoader')
+    @patch('analysis_issue_per_event.AnalyzeIssuePerEvent.plot_event_distribution')
+    @patch('analysis_issue_per_event.DataLoader')
     def test_run_with_valid_issues(self, MockDataLoader, mock_plot):
         MockDataLoader.return_value.get_issues.return_value = [
             {"events": [1, 2]},
@@ -59,14 +59,14 @@ class TestAnalyzeIssuePerEvent(unittest.TestCase):
 
         mock_plot.assert_called_once_with(expected_counts)
 
-    @patch('analysis4.DataLoader')
+    @patch('analysis_issue_per_event.DataLoader')
     def test_run_with_no_issues(self, MockDataLoader):
         MockDataLoader.return_value.get_issues.return_value = None
 
         analyzer = AnalyzeIssuePerEvent()
-        self.assertIsNone(analyzer.run())  # run exits early
+        self.assertIsNone(analyzer.run())
 
-    @patch('analysis4.DataLoader')
+    @patch('analysis_issue_per_event.DataLoader')
     @patch('builtins.print')
     def test_run_with_no_event_data(self, mock_print, MockDataLoader):
         MockDataLoader.return_value.get_issues.return_value = [
