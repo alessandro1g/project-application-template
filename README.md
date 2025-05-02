@@ -41,6 +41,9 @@ python run.py --feature 0
 
 That will output basic information about the issues to the command line.
 
+## Analysis Hosted Project - [Repolyzer](https://repolyzer.vercel.app/)
+
+We've created the web-version of the analysis using ReactJS. We used Vibecoding to achieve the task. The LLM used was o4-mini by OpenAI. Here's the link to the hosted site for [Repolyzer](https://repolyzer.vercel.app/)
 
 ## VSCode run configuration
 
