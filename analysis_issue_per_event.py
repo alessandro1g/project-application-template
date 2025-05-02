@@ -12,7 +12,7 @@ class AnalyzeIssuePerEvent:
         self.issues = DataLoader().get_issues()
 
     def run(self):
-        issues = self.load_issues()
+        issues = self.issues
         if issues is None:
             return
 

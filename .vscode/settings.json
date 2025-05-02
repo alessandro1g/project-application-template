@@ -31,4 +31,5 @@
     },
     "workbench.editor.wrapTabs": true,
     "debug.toolBarLocation": "docked",
+    "python.pythonPath": "/usr/bin/python3",
 }
