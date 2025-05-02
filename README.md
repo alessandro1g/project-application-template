@@ -123,3 +123,7 @@ coverage report --omit="test_*"
 - **Cause**: The scripts lack an early return or exit after detecting empty data scenarios.
 - **Fix Recommendation**: Add a `return` statement immediately after the "No data found" message to halt execution cleanly and avoid unnecessary plotting.
 
+### 3. Datatype Mismatch 
+
+- **Issue**: A data mismatch between the assignee json value and what we are defaulting if there is none. The actual value is a list however we are defaulting an empty string
+- **Fix Recommendation**: Default an empty list instead
