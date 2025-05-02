@@ -91,15 +91,15 @@ coverage report --omit="test_*"
 
 ## Test Coverage
 
-| File                                       | Coverage |
-|--------------------------------------------|----------|
-| `analysis_contributor_vs_labelheatmap.py` | 100%     |
-| `analysis_monthly_issue_trend.py`         | 100%     |
-| `analysis_label_popularity.py`            | 100%     |
-| `analysis_event_by_date.py`               | 98%      |
-| `analysis_type_of_events.py`              | 95%      |
-| **Overall Analysis Module Coverage**      | **100%** |
-| **Total Codebase Coverage**               | 70%      |
+| Name                                    | Stmts | Miss | Cover |
+|-----------------------------------------|-------|------|-------|
+| analysis_contributor_vs_labelheatmap.py |    31 |    0 |  100% |
+| analysis_event_by_date.py               |    42 |    1 |   98% |
+| analysis_label_popularity.py            |    31 |    0 |  100% |
+| analysis_monthly_issue_trend.py         |    27 |    0 |  100% |
+| analysis_type_of_events.py              |    39 |    2 |   95% |
+| poetry_issues_scrapper.py               |    52 |    3 |   94% |
+| **TOTAL**                               |   222 |    6 |   97% |
 
 > **Note:** Supporting files like `config.py`, `data_loader.py`, and `model.py` were not directly tested but were mocked to support analysis module testing.
 
