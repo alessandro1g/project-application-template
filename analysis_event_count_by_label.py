@@ -10,7 +10,8 @@ class Analyze_Event_Count_By_Label:
         self.issues = DataLoader().get_issues()
 
     def run(self):
-        if self.issues is None:
+        issues = self.issues
+        if issues is None:
             return
 
         label_counts = self.count_labels(self.issues)
