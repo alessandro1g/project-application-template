@@ -48,9 +48,15 @@ class AnalyzeOpenIssueDurationMonths:
         counts = [0] * 10
         for duration in durations:
             for i in range(10):
-                if windows[i] <= duration < windows[i + 1]:
-                    counts[i] += 1
-                    break
+                if i < 9:
+                    if windows[i] <= duration < windows[i + 1]:
+                        counts[i] += 1
+                        break
+                else:
+                    # Last bin includes upper bound
+                    if windows[i] <= duration <= windows[i + 1]:
+                        counts[i] += 1
+                        break
 
         centers = [(windows[i] + windows[i + 1]) / 2 for i in range(10)]
         return centers, counts
