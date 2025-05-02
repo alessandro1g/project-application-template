@@ -77,7 +77,7 @@ for issue in issues:
             "updated_date": issue.get("updated_at", ""),
             "closed_date": issue.get("closed_at", ""),
             "timeline_url": issue.get('timeline_url', ""),
-            "events": fetch_issue_timeline(issue.get('timeline_url', ""), count),
+            "events": fetch_issue_timeline(issue.get('timeline_url', []), count),
             "response_count": issue.get("comments", 0)  # Add the number of comments
         })
 # Save the extracted issues to a JSON file

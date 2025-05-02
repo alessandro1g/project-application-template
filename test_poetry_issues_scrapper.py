@@ -190,7 +190,7 @@ class TestPoetryIssuesScrapper(unittest.TestCase):
 
         # Assertions
         self.assertEqual(len(issues), 2)
-        self.assertEqual(issues[0].get("assignees", ""), [])  # This should not cause an error
+        self.assertEqual(issues[0].get("assignees", []), [])  # This should not cause an error
         self.assertEqual(issues[1]["assignees"], [])  # This should work as expected
         self.assertEqual(mock_get.call_count, 3)  # Ensure it was called three times
 
