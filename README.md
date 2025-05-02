@@ -73,6 +73,7 @@ We wrote unit tests for the following analysis components:
 | `analysis_open_issue_by_creator.py`       | Number of open issues per creator                       |
 | `analysis_open_issue_duration.py`         | Duration analysis for how long issues remain open       |
 | `analysis_type_of_events.py`              | Distribution of event types over time                   |
+| `poetry_issues_scrapper.py`               | API scrapper                                            |
 
 Tests were written using Python’s built-in `unittest` framework and mocked external dependencies like `DataLoader` and `matplotlib.pyplot.show` to isolate analysis logic.
 
@@ -123,3 +124,7 @@ coverage report --omit="test_*"
 - **Cause**: The scripts lack an early return or exit after detecting empty data scenarios.
 - **Fix Recommendation**: Add a `return` statement immediately after the "No data found" message to halt execution cleanly and avoid unnecessary plotting.
 
+### 3. Datatype Mismatch 
+
+- **Issue**: A data mismatch between the assignee json value and what we are defaulting if there is none. The actual value is a list however we are defaulting an empty string
+- **Fix Recommendation**: Default an empty list instead
