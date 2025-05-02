@@ -48,6 +48,10 @@ To make the application easier to debug, runtime configurations are provided to 
 
 The `.vscode/settings.json` also customizes the VSCode user interface sligthly to make navigation and debugging easier. But that is a matter of preference and can be turned off by removing the appropriate settings.
 
+## Analysis Hosted Project - [Repolyzer](https://repolyzer.vercel.app/)
+
+We've created the web-version of the analysis using ReactJS. We used Vibecoding to achieve the task. The LLM used was o4-mini by OpenAI. Here's the link to the hosted site for [Repolyzer](https://repolyzer.vercel.app/)
+
 ## Testing
 
 ### Overview
