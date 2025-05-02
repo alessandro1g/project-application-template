@@ -47,3 +47,79 @@ That will output basic information about the issues to the command line.
 To make the application easier to debug, runtime configurations are provided to run each of the analyses you are implementing. When you click on the run button in the left-hand side toolbar, you can select to run one of the three analyses or run the file you are currently viewing. That makes debugging a little easier. This run configuration is specified in the `.vscode/launch.json` if you want to modify it.
 
 The `.vscode/settings.json` also customizes the VSCode user interface sligthly to make navigation and debugging easier. But that is a matter of preference and can be turned off by removing the appropriate settings.
+
+## Testing
+
+### Overview
+
+For Milestone 3, we implemented comprehensive unit tests to verify the functionality and stability of all analysis modules developed in the project. The goal was to ensure correctness, handle edge cases, and achieve the required test coverage as per project guidelines.
+
+---
+
+### Tested Modules
+
+We wrote unit tests for the following analysis components:
+
+| Module File                               | Description                                              |
+|-------------------------------------------|----------------------------------------------------------|
+| `analysis_contributor_vs_labelheatmap.py` | Heatmap of top 10 contributors vs labels                |
+| `analysis_event_by_date.py`               | Event frequency by date                                 |
+| `analysis_event_count_by_label.py`        | Count of events grouped by label                        |
+| `analysis_issue_count_by_label.py`        | Total number of issues per label                        |
+| `analysis_issue_creation_over_years.py`   | Annual trend in issue creation                          |
+| `analysis_issue_per_event.py`             | Number of issues for each event type                    |
+| `analysis_label_popularity.py`            | Label usage trends over time (Top 5 labels)             |
+| `analysis_monthly_issue_trend.py`         | Monthly trend of issue creation                         |
+| `analysis_open_issue_by_creator.py`       | Number of open issues per creator                       |
+| `analysis_open_issue_duration.py`         | Duration analysis for how long issues remain open       |
+| `analysis_type_of_events.py`              | Distribution of event types over time                   |
+
+Tests were written using Python’s built-in `unittest` framework and mocked external dependencies like `DataLoader` and `matplotlib.pyplot.show` to isolate analysis logic.
+
+---
+
+
+### How to Run Tests
+
+To run all test cases and generate a coverage report:
+
+```bash
+coverage run -m unittest discover
+coverage report --omit="test_*"
+```
+
+## Test Coverage
+
+| File                                       | Coverage |
+|--------------------------------------------|----------|
+| `analysis_contributor_vs_labelheatmap.py` | 100%     |
+| `analysis_monthly_issue_trend.py`         | 100%     |
+| `analysis_label_popularity.py`            | 100%     |
+| `analysis_event_by_date.py`               | 98%      |
+| `analysis_type_of_events.py`              | 95%      |
+| **Overall Analysis Module Coverage**      | **100%** |
+| **Total Codebase Coverage**               | 70%      |
+
+> **Note:** Supporting files like `config.py`, `data_loader.py`, and `model.py` were not directly tested but were mocked to support analysis module testing.
+
+---
+
+##  Issues Found During Testing
+
+### 1. Plotting Error in `analysis_type_of_events.py`
+
+- **Issue**: A `matplotlib.units.ConversionError` was raised due to mixing incompatible datetime formats on the x-axis.
+- **Cause**: Plotting `datetime64` objects without consistent axis formatting.
+- **Fix Recommendation**: Explicitly convert dates using `pd.to_datetime()` or `.strftime('%Y-%m')`.
+
+### 2. Incomplete Handling of Empty Inputs in Analysis Modules
+
+- **Affected Modules**:
+  - `analysis_contributor_vs_labelheatmap.py`
+  - `analysis_label_popularity.py`
+  - `analysis_monthly_issue_trend.py`
+
+- **Issue**: When no valid data (e.g., labels or contributors) is available, the modules print a message but may continue executing and attempt to plot empty or misleading visuals.
+- **Cause**: The scripts lack an early return or exit after detecting empty data scenarios.
+- **Fix Recommendation**: Add a `return` statement immediately after the "No data found" message to halt execution cleanly and avoid unnecessary plotting.
+
