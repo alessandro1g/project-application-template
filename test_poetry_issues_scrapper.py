@@ -153,5 +153,47 @@ class TestPoetryIssuesScrapper(unittest.TestCase):
         self.assertEqual(len(timeline), 0)
         mock_get.assert_not_called()
 
+
+    @patch('poetry_issues_scrapper.requests.get')
+    def test_fetch_all_issues_with_empty_assignees(self, mock_get):
+        print("test_fetch_all_issues_with_empty_assignees")
+        
+        # Mock responses for multiple pages
+        mock_response_page_1 = MagicMock()
+        mock_response_page_1.status_code = 200
+        mock_response_page_1.json.return_value = [
+            {
+                "id": 1,
+                "title": "Issue with no assignees" # Incorrect type (string instead of list)
+            }
+        ]
+
+        mock_response_page_2 = MagicMock()
+        mock_response_page_2.status_code = 200
+        mock_response_page_2.json.return_value = [
+            {
+                "id": 2,
+                "title": "Issue with empty assignees",
+                "assignees": []  # Correct type (empty list)
+            }
+        ]
+
+        mock_response_page_3 = MagicMock()
+        mock_response_page_3.status_code = 200
+        mock_response_page_3.json.return_value = []
+
+        # Use side_effect to simulate multiple pages
+        mock_get.side_effect = [mock_response_page_1, mock_response_page_2, mock_response_page_3]
+
+        headers = {"Authorization": "token test_token"}
+        issues = fetch_all_issues("https://api.github.com/repos/test/repo/issues", headers)
+
+        # Assertions
+        self.assertEqual(len(issues), 2)
+        self.assertEqual(issues[0].get("assignees", ""), [])  # This should not cause an error
+        self.assertEqual(issues[1]["assignees"], [])  # This should work as expected
+        self.assertEqual(mock_get.call_count, 3)  # Ensure it was called three times
+
+
 if __name__ == '__main__':
     unittest.main()
