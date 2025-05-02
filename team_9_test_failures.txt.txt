@@ -1,0 +1,46 @@
+coverage run -m unittest discover
+Fetching page 1...
+Failed to fetch issues. Status code: 401
+Fetched 0 issues.
+No contributor-label data found.
+...[]
+...[<MagicMock spec='Issue' id='6030372432'>, <MagicMock spec='Issue' id='6030380624'>]
+.Loaded 0 issues from ./github_issues.json.
+........Invalid date format: not-a-date, error: Invalid isoformat string: 'not-a-date'
+........No events found in the issues.
+.No labels found.
+...No issue creation data found.
+.......Invalid date format: not-a-date, error: Invalid isoformat string: 'not-a-date'
+.........test_fetch_all_issues_empty_response
+Fetching page 1...
+Fetched 0 issues.
+.test_fetch_all_issues_failure
+Fetching page 1...
+Failed to fetch issues. Status code: 404
+Fetched 0 issues.
+.test_fetch_all_issues_invalid_json
+Fetching page 1...
+.test_fetch_all_issues_success
+Fetching page 1...
+Fetching page 2...
+Fetched 2 issues.
+.test_fetch_all_issues_with_empty_assignees
+Fetching page 1...
+Fetching page 2...
+Fetching page 3...
+Fetched 2 issues.
+.test_fetch_issue_timeline_empty_url
+.test_fetch_issue_timeline_failure
+1
+Fetching page 1...
+Failed to fetch issues. Status code: 404
+.test_fetch_issue_timeline_invalid_json
+Fetching page 1...
+.test_fetch_issue_timeline_success
+1
+Fetching page 1...
+Fetching page 2...
+Fetching page 3...
+.
+----------------------------------------------------------------------
+Ran 52 tests in 13.712s
